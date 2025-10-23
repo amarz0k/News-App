@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:news_application/api/api.dart';
 import 'package:news_application/constants/app_style.dart';
 import 'package:news_application/models/source_model.dart';
@@ -37,9 +38,33 @@ class _HomePageState extends State<HomePage>
     }
   }
 
-
   void onTabTapped(int index) {
     setState(() {});
+  }
+
+  String formatDate(String dateStr) {
+    final date = DateTime.parse(dateStr);
+    final now = DateTime.now();
+    final difference = now.difference(date);
+
+    if (difference.inDays > 8) {
+      // For older dates, return formatted date instead
+      return DateFormat('MMM d, yyyy').format(date);
+    } else if (difference.inDays >= 2) {
+      return '${difference.inDays} days ago';
+    } else if (difference.inDays >= 1) {
+      return 'a day ago';
+    } else if (difference.inHours >= 2) {
+      return '${difference.inHours} hours ago';
+    } else if (difference.inHours >= 1) {
+      return 'an hour ago';
+    } else if (difference.inMinutes >= 2) {
+      return '${difference.inMinutes} minutes ago';
+    } else if (difference.inMinutes >= 1) {
+      return 'a minute ago';
+    } else {
+      return 'just now';
+    }
   }
 
   @override
@@ -159,12 +184,18 @@ class _HomePageState extends State<HomePage>
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text(
-                                                  "by: ${articles[index].author}",
-                                                  style: AppStyle.grey16Normal,
+                                                Flexible(
+                                                  child: Text(
+                                                    "by: ${articles[index].author}",
+                                                    style:
+                                                        AppStyle.grey16Normal,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 ),
                                                 Text(
-                                                  "a day ago",
+                                                  formatDate(articles[index]
+                                                      .publishedAt),
                                                   style: AppStyle.grey12Bold,
                                                 ),
                                               ],
