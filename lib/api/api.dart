@@ -8,20 +8,24 @@ import 'package:news_application/models/article_model.dart';
 import 'package:news_application/models/source_model.dart';
 
 class Api {
+  static void checkApiRateLimit(Map<String, dynamic> data) {
+    if (data["status"] == "error" && data["code"] == "rateLimited") {
+      log("API Rate limit exceeded: ${data["message"]}");
+      throw Exception("API Rate limit exceeded: ${data["message"]}");
+    }
+  }
+
   static Future<List<SourceModel>> getAllSources() async {
     try {
-      // final url = Uri.parse(
-      //   "${ApiRoutes.baseUrl}/${ApiRoutes.topHeadlines}/${ApiRoutes.sources}?language=en&${ApiRoutes.apiKey}",
-      // );
-
       final url = Uri.https(ApiRoutes.baseUrl, "v2/top-headlines/sources", {
-        "language": "en",
         "apiKey": ApiConstants.apiKey,
       });
 
       final res = await http.get(url);
+      final jsonData = await json.decode(res.body);
 
-      final jsonData = json.decode(res.body);
+      checkApiRateLimit(jsonData);
+
       if (jsonData["sources"] is List && jsonData["sources"].isNotEmpty) {
         final List<SourceModel> sources = (jsonData["sources"] as List)
             .map((source) => SourceModel.fromJson(source))
@@ -32,8 +36,8 @@ class Api {
         throw Exception("No sources found");
       }
     } catch (e) {
-      print(e);
-      return [];
+      log("get sources error: $e");
+      rethrow;
     }
   }
 
@@ -45,7 +49,9 @@ class Api {
       });
 
       final res = await http.get(url);
-      final jsonData = json.decode(res.body);
+      final jsonData = await json.decode(res.body);
+
+      checkApiRateLimit(jsonData);
 
       // Add null safety check here
       if (jsonData["articles"] != null && jsonData["articles"] is List) {
@@ -53,20 +59,14 @@ class Api {
             .map((article) => ArticleModel.fromJson(article))
             .toList();
 
-        if (articles.isNotEmpty) {
-          return articles;
-        } else {
-          throw Exception("No articles found");
-        }
+        return articles;
       } else {
-        print(
-          "API Response: $jsonData",
-        ); // Debug: see what the API actually returns
+        log("API Response: $jsonData");
         throw Exception("Invalid response format or no articles field");
       }
     } catch (e) {
-      print("Error in getArticles: $e");
-      return [];
+      log("get articles error: $e");
+      rethrow; // Change this from: return [];
     }
   }
 }

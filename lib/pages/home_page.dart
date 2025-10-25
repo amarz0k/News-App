@@ -1,9 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:news_application/api/api.dart';
 import 'package:news_application/constants/app_style.dart';
-import 'package:news_application/models/source_model.dart';
+import 'package:news_application/widgets/news_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,7 +15,7 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
   final List<Map<String, String>> _tabs = [];
-  final List<SourceModel> _sources = [];
+  String? _errorMessage; // Add this line
 
   @override
   void initState() {
@@ -25,16 +24,26 @@ class _HomePageState extends State<HomePage>
   }
 
   Future<void> getTabs() async {
-    final sources = await Api.getAllSources();
+    try {
+      final sources = await Api.getAllSources();
 
-    if (mounted) {
-      setState(() {
-        _tabs.clear();
-        _tabs.addAll(sources.map((e) => {"id": e.id, "name": e.name}));
-        _tabController?.dispose();
-        _tabController = TabController(length: _tabs.length, vsync: this);
-      });
-      _sources.addAll(sources);
+      if (mounted) {
+        setState(() {
+          _tabs.clear();
+          _tabs.addAll(sources.map((e) => {"id": e.id, "name": e.name}));
+          _tabController?.dispose();
+          _tabController = TabController(length: _tabs.length, vsync: this);
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          // Show error state
+          _tabs.clear();
+          _errorMessage = e.toString(); // Add this line to store the error
+        });
+        // Remove the entire SnackBar block
+      }
     }
   }
 
@@ -112,7 +121,44 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
       ),
-      body: _tabs.isEmpty || _sources.isEmpty
+      body: _errorMessage != null
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error, color: Colors.red, size: 64),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Error Loading News',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Text(
+                      _errorMessage!,
+                      style: TextStyle(color: Colors.red, fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _errorMessage = null;
+                      });
+                      getTabs();
+                    },
+                    child: Text('Retry'),
+                  ),
+                ],
+              ),
+            )
+          : _tabs.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : TabBarView(
               controller: _tabController,
@@ -127,12 +173,38 @@ class _HomePageState extends State<HomePage>
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Center(
-                                child: Text(
-                                  snapshot.error.toString(),
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 16,
-                                  ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.error,
+                                      color: Colors.red,
+                                      size: 48,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      'Error loading articles:',
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                      ),
+                                      child: Text(
+                                        snapshot.error.toString(),
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 14,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               );
                             } else if (snapshot.connectionState ==
@@ -147,61 +219,9 @@ class _HomePageState extends State<HomePage>
                                   child: ListView.builder(
                                     itemCount: articles.length,
                                     itemBuilder: (context, index) {
-                                      return Container(
-                                        padding: EdgeInsets.all(8),
-                                        margin: EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            10,
-                                          ),
-                                          border: Border.all(
-                                            width: 1,
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    articles[index].urlToImage,
-                                                placeholder: (context, url) =>
-                                                    CircularProgressIndicator(),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        Icon(Icons.error),
-                                              ),
-                                            ),
-                                            SizedBox(height: 8),
-                                            Text(
-                                              articles[index].title,
-                                              style: AppStyle.black16Bold,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Flexible(
-                                                  child: Text(
-                                                    "by: ${articles[index].author}",
-                                                    style:
-                                                        AppStyle.grey16Normal,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  formatDate(articles[index]
-                                                      .publishedAt),
-                                                  style: AppStyle.grey12Bold,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                      return NewsWidget(
+                                        articles: articles,
+                                        index: index,
                                       );
                                     },
                                   ),
