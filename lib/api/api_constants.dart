@@ -1,3 +1,3 @@
 class ApiConstants {
-  static const String apiKey = "906979f67aa34fd4a5d6f1606294cd6a";
+  static const String apiKey = "7174550d06064d11bba20d8668350f43";
 }

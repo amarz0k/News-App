@@ -15,45 +15,47 @@ class Api {
     }
   }
 
-  static Future<List<SourceModel>> getAllSources() async {
+  static Future<List<SourceModel>> getCategorySources(String category) async {
     try {
       final url = Uri.https(ApiRoutes.baseUrl, "v2/top-headlines/sources", {
+        "category": category,
         "apiKey": ApiConstants.apiKey,
       });
+
+      log(url.toString());
 
       final res = await http.get(url);
       final jsonData = await json.decode(res.body);
 
       checkApiRateLimit(jsonData);
 
-      if (jsonData["sources"] is List && jsonData["sources"].isNotEmpty) {
+      if (jsonData["sources"] != null && jsonData["sources"] is List) {
         final List<SourceModel> sources = (jsonData["sources"] as List)
-            .map((source) => SourceModel.fromJson(source))
+            .map((article) => SourceModel.fromJson(article))
             .toList();
+
         return sources;
       } else {
-        log("No sources found");
-        throw Exception("No sources found");
+        throw Exception("Invalid data format received from API");
       }
     } catch (e) {
-      log("get sources error: $e");
+      print(e);
       rethrow;
     }
   }
 
-  static Future<List<ArticleModel>> getArticles(String articleId) async {
+  static Future<List<ArticleModel>> getArticles(
+    String sourceId,
+    String category,
+  ) async {
     try {
-      final url = Uri.https(ApiRoutes.baseUrl, "v2/everything", {
-        "sources": articleId,
-        "apiKey": ApiConstants.apiKey,
-      });
+      final url = Uri.parse("https://${ApiRoutes.baseUrl}/v2/top-headlines?sources=$sourceId?category=$category&apiKey=${ApiConstants.apiKey}");
 
       final res = await http.get(url);
       final jsonData = await json.decode(res.body);
 
       checkApiRateLimit(jsonData);
 
-      // Add null safety check here
       if (jsonData["articles"] != null && jsonData["articles"] is List) {
         final List<ArticleModel> articles = (jsonData["articles"] as List)
             .map((article) => ArticleModel.fromJson(article))
@@ -61,12 +63,11 @@ class Api {
 
         return articles;
       } else {
-        log("API Response: $jsonData");
-        throw Exception("Invalid response format or no articles field");
+        throw Exception("Invalid data format received from API");
       }
     } catch (e) {
-      log("get articles error: $e");
-      rethrow; // Change this from: return [];
+      print(e);
+      rethrow;
     }
   }
 }

@@ -16,6 +16,22 @@ class AppStyle {
     fontWeight: FontWeight.bold,
   );
 
+  // Newly added Normal styles
+  static const TextStyle text12Normal = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.normal,
+  );
+
+  static const TextStyle text16Normal = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+  );
+
+  static const TextStyle text26Normal = TextStyle(
+    fontSize: 26,
+    fontWeight: FontWeight.normal,
+  );
+
   static const TextStyle black26Bold = TextStyle(
     fontSize: 26,
     fontWeight: FontWeight.bold,

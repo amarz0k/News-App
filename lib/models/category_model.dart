@@ -13,55 +13,55 @@ class CategoryModel {
   });
 
   static List<CategoryModel> getCategories(BuildContext context) {
-    final isLightMode = Theme.of(context).brightness == Brightness.light;
+    final isDarkMode = Theme.of(context).brightness == Brightness.light;
 
     return [
       CategoryModel(
         id: "general",
         categoryName: "General",
-        imageUrl: isLightMode
+        imageUrl: isDarkMode
             ? AppImages.generalDarkCategoryBG
             : AppImages.generalLightCategoryBG,
       ),
       CategoryModel(
         id: "business",
         categoryName: "Business",
-        imageUrl: isLightMode
+        imageUrl: isDarkMode
             ? AppImages.businessDarkCategoryBG
             : AppImages.businessLightCategoryBG,
       ),
       CategoryModel(
         id: "sports",
         categoryName: "Sports",
-        imageUrl: isLightMode
+        imageUrl: isDarkMode
             ? AppImages.sportsDarkCategoryBG
             : AppImages.sportsLightCategoryBG,
       ),
       CategoryModel(
         id: "health",
         categoryName: "Health",
-        imageUrl: isLightMode
+        imageUrl: isDarkMode
             ? AppImages.healthDarkCategoryBG
             : AppImages.healthLightCategoryBG,
       ),
       CategoryModel(
         id: "entertainment",
         categoryName: "Entertainment",
-        imageUrl: isLightMode
+        imageUrl: isDarkMode
             ? AppImages.entertainmentDarkCategoryBG
             : AppImages.entertainmentLightCategoryBG,
       ),
       CategoryModel(
         id: "technology",
         categoryName: "Technology",
-        imageUrl: isLightMode
+        imageUrl: isDarkMode
             ? AppImages.technologyDarkCategoryBG
             : AppImages.technologyLightCategoryBG,
       ),
       CategoryModel(
         id: "science",
         categoryName: "Science",
-        imageUrl: isLightMode
+        imageUrl: isDarkMode
             ? AppImages.scienceDarkCategoryBG
             : AppImages.scienceLightCategoryBG,
       ),

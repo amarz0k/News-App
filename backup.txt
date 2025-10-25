@@ -1,100 +1,65 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:news_application/api/api.dart';
-import 'package:news_application/constants/app_style.dart';
-import 'package:news_application/widgets/news_widget.dart';
+  // static Future<List<SourceModel>> getAllSources() async {
+  //   try {
+  //     final url = Uri.https(ApiRoutes.baseUrl, "v2/top-headlines/sources", {
+  //       "apiKey": ApiConstants.apiKey,
+  //     });
 
-class CategoryPage extends StatefulWidget {
-  final String category;
-  const CategoryPage(this.category, {super.key});
+  //     final res = await http.get(url);
+  //     final jsonData = await json.decode(res.body);
 
-  @override
-  State<CategoryPage> createState() => _CategoryPageState();
-}
+  //     checkApiRateLimit(jsonData);
 
-class _CategoryPageState extends State<CategoryPage>
-    with SingleTickerProviderStateMixin {
-  TabController? _tabController;
-  final List<Map<String, String>> _tabs = [];
-  String? _errorMessage; // Add this line
+  //     if (jsonData["sources"] is List && jsonData["sources"].isNotEmpty) {
+  //       final List<SourceModel> sources = (jsonData["sources"] as List)
+  //           .map((source) => SourceModel.fromJson(source))
+  //           .toList();
+  //       return sources;
+  //     } else {
+  //       log("No sources found");
+  //       throw Exception("No sources found");
+  //     }
+  //   } catch (e) {
+  //     log("get sources error: $e");
+  //     rethrow;
+  //   }
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    getTabs();
-  }
+  // static Future<List<ArticleModel>> getArticles(String articleId) async {
+  //   try {
+  //     final url = Uri.https(ApiRoutes.baseUrl, "v2/everything", {
+  //       "sources": articleId,
+  //       "apiKey": ApiConstants.apiKey,
+  //     });
 
-  Future<void> getTabs() async {
-    try {
-      final sources = await Api.getCategorySources(widget.category);
+  //     final res = await http.get(url);
+  //     final jsonData = await json.decode(res.body);
 
-      if (mounted) {
-        setState(() {
-          _tabs.clear();
-          _tabs.addAll(sources.map((e) => {"id": e.id, "name": e.name}));
-          _tabController?.dispose();
-          _tabController = TabController(length: _tabs.length, vsync: this);
-        });
-      }
-    } catch (e) {
-      if (mounted) {
-        setState(() {
-          // Show error state
-          _tabs.clear();
-          _errorMessage = e.toString(); // Add this line to store the error
-        });
-        // Remove the entire SnackBar block
-      }
-    }
-  }
+  //     checkApiRateLimit(jsonData);
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
+  //     // Add null safety check here
+  //     if (jsonData["articles"] != null && jsonData["articles"] is List) {
+  //       final List<ArticleModel> articles = (jsonData["articles"] as List)
+  //           .map((article) => ArticleModel.fromJson(article))
+  //           .toList();
 
-  void onTabTapped(int index) {
-    setState(() {});
-  }
+  //       return articles;
+  //     } else {
+  //       log("API Response: $jsonData");
+  //       throw Exception("Invalid response format or no articles field");
+  //     }
+  //   } catch (e) {
+  //     log("get articles error: $e");
+  //     rethrow; // Change this from: return [];
+  //   }
+  // }
 
-  String formatDate(String dateStr) {
-    final date = DateTime.parse(dateStr);
-    final now = DateTime.now();
-    final difference = now.difference(date);
+  // ===========================================================================
 
-    if (difference.inDays > 8) {
-      // For older dates, return formatted date instead
-      return DateFormat('MMM d, yyyy').format(date);
-    } else if (difference.inDays >= 2) {
-      return '${difference.inDays} days ago';
-    } else if (difference.inDays >= 1) {
-      return 'a day ago';
-    } else if (difference.inHours >= 2) {
-      return '${difference.inHours} hours ago';
-    } else if (difference.inHours >= 1) {
-      return 'an hour ago';
-    } else if (difference.inMinutes >= 2) {
-      return '${difference.inMinutes} minutes ago';
-    } else if (difference.inMinutes >= 1) {
-      return 'a minute ago';
-    } else {
-      return 'just now';
-    }
-  }
-
-  @override
-  void dispose() {
-    _tabController?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColorDark,
+  Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColorDark,
-        title: const Text("General", style: AppStyle.text26Bold),
+        backgroundColor: Colors.white,
+        title: const Text("General", style: AppStyle.black26Bold),
         leading: IconButton(
           onPressed: () {},
           icon: const Icon(Icons.menu, size: 30),
@@ -114,11 +79,11 @@ class _CategoryPageState extends State<CategoryPage>
                   isScrollable: true,
                   indicatorColor: Colors.transparent,
                   tabAlignment: TabAlignment.start,
-                  labelColor: Theme.of(context).primaryColor,
-                  unselectedLabelColor: Theme.of(context).primaryColor,
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.black54,
                   dividerColor: Colors.transparent,
-                  labelStyle: AppStyle.text16Bold,
-                  unselectedLabelStyle: AppStyle.text16Normal,
+                  labelStyle: AppStyle.black16Bold,
+                  unselectedLabelStyle: AppStyle.black16Bold,
                   indicatorSize: TabBarIndicatorSize.label,
                   overlayColor: WidgetStateProperty.all(Colors.transparent),
                   splashFactory: NoSplash.splashFactory,
@@ -175,7 +140,7 @@ class _CategoryPageState extends State<CategoryPage>
                     child: Column(
                       children: [
                         FutureBuilder(
-                          future: Api.getArticles(tab["id"]!, widget.category),
+                          future: Api.getArticles(tab["id"]!),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Center(
@@ -246,5 +211,3 @@ class _CategoryPageState extends State<CategoryPage>
               ],
             ),
     );
-  }
-}

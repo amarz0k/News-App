@@ -16,7 +16,7 @@ class NewsWidget extends StatelessWidget {
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 1, color: Colors.black54),
+        border: Border.all(width: 1, color: Theme.of(context).primaryColor),
       ),
       child: Column(
         children: [
@@ -29,7 +29,7 @@ class NewsWidget extends StatelessWidget {
             ),
           ),
           SizedBox(height: 8),
-          Text(articles[index].title, style: AppStyle.black16Bold),
+          Text(articles[index].title, style: AppStyle.text16Bold),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
