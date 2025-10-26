@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_application/constants/app_style.dart';
 import 'package:news_application/models/category_model.dart';
 import 'package:news_application/pages/category_page.dart';
+import 'package:news_application/widgets/menu_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,13 +41,22 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text("Home", style: AppStyle.text26Bold),
         centerTitle: true,
+        leading: Builder(
+          builder: (context) => IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: const Icon(Icons.menu, size: 30),
+          ),
+        ),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: Icon(Icons.search),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search, size: 30),
           ),
         ],
       ),
+      drawer: MenuDrawer(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),

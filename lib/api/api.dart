@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:news_application/api/api_constants.dart';
@@ -10,7 +9,6 @@ import 'package:news_application/models/source_model.dart';
 class Api {
   static void checkApiRateLimit(Map<String, dynamic> data) {
     if (data["status"] == "error" && data["code"] == "rateLimited") {
-      log("API Rate limit exceeded: ${data["message"]}");
       throw Exception("API Rate limit exceeded: ${data["message"]}");
     }
   }
@@ -21,8 +19,6 @@ class Api {
         "category": category,
         "apiKey": ApiConstants.apiKey,
       });
-
-      log(url.toString());
 
       final res = await http.get(url);
       final jsonData = await json.decode(res.body);
@@ -49,7 +45,9 @@ class Api {
     String category,
   ) async {
     try {
-      final url = Uri.parse("https://${ApiRoutes.baseUrl}/v2/top-headlines?sources=$sourceId?category=$category&apiKey=${ApiConstants.apiKey}");
+      final url = Uri.parse(
+        "https://${ApiRoutes.baseUrl}/v2/top-headlines?sources=$sourceId?category=$category&apiKey=${ApiConstants.apiKey}",
+      );
 
       final res = await http.get(url);
       final jsonData = await json.decode(res.body);

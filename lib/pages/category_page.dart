@@ -95,10 +95,7 @@ class _CategoryPageState extends State<CategoryPage>
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColorDark,
         title: const Text("General", style: AppStyle.text26Bold),
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu, size: 30),
-        ),
+
         actions: [
           IconButton(
             onPressed: () {},
