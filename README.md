@@ -44,23 +44,23 @@ Browse news by categories:
 
 ### Home Screen (Light Mode)
 
-![Home Light Mode](assets/screenshots/simulator_screenshot_0A63D1B8-0316-472F-BACE-AD20C211D31B.png)
+<img src="assets/screenshots/simulator_screenshot_0A63D1B8-0316-472F-BACE-AD20C211D31B.png" alt="Home Light Mode" width="300"/>
 
 ### Home Screen (Dark Mode)
 
-![Home Dark Mode](assets/screenshots/simulator_screenshot_B6C63708-2D92-45B3-9C3A-D7BB4E6132C7.png)
+<img src="assets/screenshots/simulator_screenshot_B6C63708-2D92-45B3-9C3A-D7BB4E6132C7.png" alt="Home Dark Mode" width="300"/>
 
 ### Category Page
 
-![Category Page](assets/screenshots/simulator_screenshot_796E1E1D-0D6C-4756-992A-77569D3127D5.png)
+<img src="assets/screenshots/simulator_screenshot_796E1E1D-0D6C-4756-992A-77569D3127D5.png" alt="Category Page" width="300"/>
 
 ### Arabic Language Support
 
-![Arabic Mode](assets/screenshots/simulator_screenshot_AA865523-6DA2-4F3C-B207-BB1BB9026343.png)
+<img src="assets/screenshots/simulator_screenshot_AA865523-6DA2-4F3C-B207-BB1BB9026343.png" alt="Arabic Mode" width="300"/>
 
 ### Drawer Menu
 
-![Drawer Menu](assets/screenshots/simulator_screenshot_BD9C4FC7-4983-499D-9E84-FD34748BBCE7.png)
+<img src="assets/screenshots/simulator_screenshot_BD9C4FC7-4983-499D-9E84-FD34748BBCE7.png" alt="Drawer Menu" width="300"/>
 
 </div>
 
