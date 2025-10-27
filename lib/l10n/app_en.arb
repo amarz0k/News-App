@@ -1,0 +1,42 @@
+{
+    "language": "English",
+    "@language" : {
+        "description": "The current language"
+    }
+    "title": "News App",
+    "@title": {
+        "description": "The application title"
+    },
+    "goToHome": "Go To Home",
+    "@goToHome": {
+        "description": "Go to home page"
+    },
+    "theme": "Theme",
+    "@theme": {
+        "description": "Theme section"
+    },
+    "language": "Language",
+    "@language": {
+        "description": "Language section"
+    }
+    "arabic": "Arabic",
+    "@arabic": {
+        "description": "Arabic language"
+    },
+    "homePageTitle": "Home",
+    "@homePageTitle": {
+        "description": "Home page title"
+    },
+    "homePageContentTitle": "Good Morning",
+    "@homePageContentTitle": {
+        "description": "Home page content title"
+    },
+    "homePageContentDescription": "Here is Some News For You",
+    "@homePageContentDescription": {
+        "description": "Home page content description"
+    },
+    "viewAll": "View All",
+    "@viewAll": {
+        "description": "View all button"
+    },
+}
