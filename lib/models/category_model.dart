@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_application/constants/app_images.dart';
+import 'package:news_application/l10n/app_localizations.dart';
 
 class CategoryModel {
   final String id;
@@ -18,49 +19,49 @@ class CategoryModel {
     return [
       CategoryModel(
         id: "general",
-        categoryName: "General",
+        categoryName: AppLocalizations.of(context)!.general,
         imageUrl: isDarkMode
             ? AppImages.generalDarkCategoryBG
             : AppImages.generalLightCategoryBG,
       ),
       CategoryModel(
         id: "business",
-        categoryName: "Business",
+        categoryName: AppLocalizations.of(context)!.business,
         imageUrl: isDarkMode
             ? AppImages.businessDarkCategoryBG
             : AppImages.businessLightCategoryBG,
       ),
       CategoryModel(
         id: "sports",
-        categoryName: "Sports",
+        categoryName: AppLocalizations.of(context)!.sports,
         imageUrl: isDarkMode
             ? AppImages.sportsDarkCategoryBG
             : AppImages.sportsLightCategoryBG,
       ),
       CategoryModel(
         id: "health",
-        categoryName: "Health",
+        categoryName: AppLocalizations.of(context)!.health,
         imageUrl: isDarkMode
             ? AppImages.healthDarkCategoryBG
             : AppImages.healthLightCategoryBG,
       ),
       CategoryModel(
         id: "entertainment",
-        categoryName: "Entertainment",
+        categoryName: AppLocalizations.of(context)!.entertainment,
         imageUrl: isDarkMode
             ? AppImages.entertainmentDarkCategoryBG
             : AppImages.entertainmentLightCategoryBG,
       ),
       CategoryModel(
         id: "technology",
-        categoryName: "Technology",
+        categoryName: AppLocalizations.of(context)!.technology,
         imageUrl: isDarkMode
             ? AppImages.technologyDarkCategoryBG
             : AppImages.technologyLightCategoryBG,
       ),
       CategoryModel(
         id: "science",
-        categoryName: "Science",
+        categoryName: AppLocalizations.of(context)!.science,
         imageUrl: isDarkMode
             ? AppImages.scienceDarkCategoryBG
             : AppImages.scienceLightCategoryBG,

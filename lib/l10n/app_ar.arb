@@ -1,0 +1,79 @@
+{
+    "@@locale": "ar",
+    "title": "تطبيق الأخبار",
+    "@title": {
+        "description": "The application title"
+    },
+    "goToHome": "الذهاب إلى الرئيسية",
+    "@goToHome": {
+        "description": "Go to home page"
+    },
+    "theme": "المظهر",
+    "@theme": {
+        "description": "Theme section"
+    },
+    "language": "اللغة",
+    "@language": {
+        "description": "Language section"
+    },
+    "english": "الإنجليزية",
+    "@english": {
+        "description": "English language"
+    },
+    "arabic": "العربية",
+    "@arabic": {
+        "description": "Arabic language"
+    },
+    "homePageTitle": "الرئيسية",
+    "@homePageTitle": {
+        "description": "Home page title"
+    },
+    "homePageContentTitle": "صباح الخير",
+    "@homePageContentTitle": {
+        "description": "Home page content title"
+    },
+    "homePageContentDescription": "إليك بعض الأخبار من أجلك",
+    "@homePageContentDescription": {
+        "description": "Home page content description"
+    },
+    "viewAll": "عرض الكل",
+    "@viewAll": {
+        "description": "View all button"
+    },
+    "general": "عام",
+    "@general": {
+        "description": "General category"
+    },
+    "business": "الأعمال",
+    "@business": {
+        "description": "Business category"
+    },
+    "sports": "الرياضة",
+    "@sports": {
+        "description": "Sports category"
+    },
+    "health": "الصحة",
+    "@health": {
+        "description": "Health category"
+    },
+    "entertainment": "Entertainment",
+    "@entertainment": {
+        "description": "Entertainment category"
+    },
+    "technology": "التكنولوجيا",
+    "@technology": {
+        "description": "Technology category"
+    },
+    "science": "العلوم",
+    "@science": {
+        "description": "Science category"
+    },
+    "light": "فاتح",
+    "@light": {
+        "description": "Light theme"
+    },
+    "dark": "داكن",
+    "@dark": {
+        "description": "Dark theme"
+    }
+}

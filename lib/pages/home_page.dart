@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:news_application/constants/app_style.dart';
+import 'package:news_application/l10n/app_localizations.dart';
 import 'package:news_application/models/category_model.dart';
 import 'package:news_application/pages/category_page.dart';
 import 'package:news_application/widgets/menu_drawer.dart';
+import 'package:news_application/widgets/view_all_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,7 +41,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home", style: AppStyle.text26Bold),
+        title: Text(
+          AppLocalizations.of(context)!.homePageTitle,
+          style: AppStyle.text26Bold,
+        ),
         centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
@@ -64,8 +69,14 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20),
-              Text("Good Morning", style: AppStyle.text26Bold),
-              Text("Here is Some News For You", style: AppStyle.text26Bold),
+              Text(
+                AppLocalizations.of(context)!.homePageContentTitle,
+                style: AppStyle.text26Bold,
+              ),
+              Text(
+                AppLocalizations.of(context)!.homePageContentDescription,
+                style: AppStyle.text26Bold,
+              ),
               SizedBox(height: 20),
               ListView.builder(
                 shrinkWrap: true,
@@ -80,8 +91,10 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                CategoryPage(_categories[index].id),
+                            builder: (context) => CategoryPage(
+                              _categories[index].id,
+                              _categories[index].categoryName,
+                            ),
                           ),
                         );
                       },
@@ -103,41 +116,7 @@ class _HomePageState extends State<HomePage> {
                               bottom: 16,
                               right: isEven ? 16.0 : null,
                               left: isEven ? null : 16.0,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(100),
-                                        bottomLeft: Radius.circular(100),
-                                      ),
-                                      color: Colors.grey,
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "View All",
-                                        style: AppStyle.white16Normal,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(100),
-                                        bottomRight: Radius.circular(100),
-                                      ),
-                                      color: Theme.of(context).primaryColorDark,
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              child: ViewAllButton(),
                             ),
                           ],
                         ),

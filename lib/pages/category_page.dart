@@ -5,8 +5,9 @@ import 'package:news_application/constants/app_style.dart';
 import 'package:news_application/widgets/news_widget.dart';
 
 class CategoryPage extends StatefulWidget {
-  final String category;
-  const CategoryPage(this.category, {super.key});
+  final String categoryId;
+  final String categoryName;
+  const CategoryPage(this.categoryId, this.categoryName, {super.key});
 
   @override
   State<CategoryPage> createState() => _CategoryPageState();
@@ -26,7 +27,7 @@ class _CategoryPageState extends State<CategoryPage>
 
   Future<void> getTabs() async {
     try {
-      final sources = await Api.getCategorySources(widget.category);
+      final sources = await Api.getCategorySources(widget.categoryId);
 
       if (mounted) {
         setState(() {
@@ -94,7 +95,7 @@ class _CategoryPageState extends State<CategoryPage>
       backgroundColor: Theme.of(context).primaryColorDark,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColorDark,
-        title: const Text("General", style: AppStyle.text26Bold),
+        title:  Text(widget.categoryName, style: AppStyle.text26Bold),
 
         actions: [
           IconButton(
@@ -172,7 +173,8 @@ class _CategoryPageState extends State<CategoryPage>
                     child: Column(
                       children: [
                         FutureBuilder(
-                          future: Api.getArticles(tab["id"]!, widget.category),
+                          future: Api.getArticles(tab["id"]!, widget.categoryName,
+                          ),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Center(

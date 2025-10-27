@@ -1,8 +1,5 @@
 {
-    "language": "English",
-    "@language" : {
-        "description": "The current language"
-    }
+    "@@locale": "en",
     "title": "News App",
     "@title": {
         "description": "The application title"
@@ -18,7 +15,11 @@
     "language": "Language",
     "@language": {
         "description": "Language section"
-    }
+    },
+    "english": "English",
+    "@english": {
+        "description": "English language"
+    },
     "arabic": "Arabic",
     "@arabic": {
         "description": "Arabic language"
@@ -39,4 +40,40 @@
     "@viewAll": {
         "description": "View all button"
     },
+    "general": "General",
+    "@general": {
+        "description": "General category"
+    },
+    "business": "Business",
+    "@business": {
+        "description": "Business category"
+    },
+    "sports": "Sports",
+    "@sports": {
+        "description": "Sports category"
+    },
+    "health": "Health",
+    "@health": {
+        "description": "Health category"
+    },
+    "entertainment": "Entertainment",
+    "@entertainment": {
+        "description": "Entertainment category"
+    },
+    "technology": "Technology",
+    "@technology": {
+        "description": "Technology category"
+    },
+    "science": "Science",
+    "@science": {
+        "description": "Science category"
+    },
+    "light": "Light",
+    "@light": {
+        "description": "Light theme"
+    },
+    "dark": "Dark",
+    "@dark": {
+        "description": "Dark theme"
+    }
 }

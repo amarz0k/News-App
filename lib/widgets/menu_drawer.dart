@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:news_application/constants/locale_provider.dart';
 import 'package:news_application/constants/theme_provider.dart';
+import 'package:news_application/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class MenuDrawer extends StatefulWidget {
@@ -12,7 +14,10 @@ class MenuDrawer extends StatefulWidget {
 class _MenuDrawerState extends State<MenuDrawer> {
   @override
   Widget build(BuildContext context) {
-    String selectedLanguage = "English";
+    String selectedLanguage =
+        Provider.of<LocaleProvider>(context).locale.languageCode == "en"
+        ? "English"
+        : "Arabic";
     String selectedTheme =
         Provider.of<ThemeProvider>(context).themeData.brightness ==
             Brightness.light
@@ -31,7 +36,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 color: Theme.of(context).primaryColor,
                 child: Center(
                   child: Text(
-                    "News App",
+                    AppLocalizations.of(context)!.title,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -56,7 +61,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                       ),
                       SizedBox(width: 12),
                       Text(
-                        "Go To Home",
+                        AppLocalizations.of(context)!.goToHome,
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 18,
@@ -90,7 +95,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                         ),
                         SizedBox(width: 12),
                         Text(
-                          "Theme",
+                          AppLocalizations.of(context)!.theme,
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 18,
@@ -121,14 +126,14 @@ class _MenuDrawerState extends State<MenuDrawer> {
                             color: Theme.of(context).primaryColor,
                             fontSize: 16,
                           ),
-                          items: const [
+                          items: [
                             DropdownMenuItem(
                               value: "Light",
-                              child: Text("Light"),
+                              child: Text(AppLocalizations.of(context)!.light),
                             ),
                             DropdownMenuItem(
                               value: "Dark",
-                              child: Text("Dark"),
+                              child: Text(AppLocalizations.of(context)!.dark),
                             ),
                           ],
                           onChanged: (String? newValue) {
@@ -166,7 +171,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                             ),
                             SizedBox(width: 12),
                             Text(
-                              "Language",
+                              AppLocalizations.of(context)!.language,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 18,
@@ -197,24 +202,33 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 16,
                               ),
-                              items: const [
+                              items: [
                                 DropdownMenuItem(
                                   value: "English",
-                                  child: Text("English"),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.english,
+                                  ),
                                 ),
                                 DropdownMenuItem(
-                                  value: "Spanish",
-                                  child: Text("Spanish"),
-                                ),
-                                DropdownMenuItem(
-                                  value: "French",
-                                  child: Text("French"),
+                                  value: "Arabic",
+                                  child: Text(
+                                    AppLocalizations.of(context)!.arabic,
+                                  ),
                                 ),
                               ],
                               onChanged: (String? newValue) {
                                 if (newValue != null) {
                                   setState(() {
                                     selectedLanguage = newValue;
+                                    // Map language name to language code
+                                    String languageCode =
+                                        newValue.toLowerCase() == "english"
+                                        ? "en"
+                                        : "ar";
+                                    Provider.of<LocaleProvider>(
+                                      context,
+                                      listen: false,
+                                    ).chnageLocale(languageCode);
                                   });
                                 }
                               },
