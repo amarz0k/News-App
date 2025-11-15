@@ -3,6 +3,7 @@ import 'package:news_application/constants/app_style.dart';
 import 'package:news_application/l10n/app_localizations.dart';
 import 'package:news_application/models/category_model.dart';
 import 'package:news_application/pages/category_page.dart';
+import 'package:news_application/utils/custom_search.dart';
 import 'package:news_application/widgets/menu_drawer.dart';
 import 'package:news_application/widgets/view_all_button.dart';
 
@@ -15,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<CategoryModel> _categories = [];
+  var searchTextController = TextEditingController();
 
   @override
   void initState() {
@@ -56,7 +58,9 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showSearch(context: context, delegate: CustomSearch());
+            },
             icon: const Icon(Icons.search, size: 30),
           ),
         ],

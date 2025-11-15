@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:news_application/api/api.dart';
 import 'package:news_application/constants/app_style.dart';
+import 'package:news_application/utils/custom_search.dart';
 import 'package:news_application/widgets/news_widget.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -95,11 +96,13 @@ class _CategoryPageState extends State<CategoryPage>
       backgroundColor: Theme.of(context).primaryColorDark,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColorDark,
-        title:  Text(widget.categoryName, style: AppStyle.text26Bold),
+        title: Text(widget.categoryName, style: AppStyle.text26Bold),
 
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showSearch(context: context, delegate: CustomSearch());
+            },
             icon: const Icon(Icons.search, size: 30),
           ),
         ],
@@ -173,8 +176,7 @@ class _CategoryPageState extends State<CategoryPage>
                     child: Column(
                       children: [
                         FutureBuilder(
-                          future: Api.getArticles(tab["id"]!, widget.categoryName,
-                          ),
+                          future: Api.getArticles(tab["id"]!),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Center(

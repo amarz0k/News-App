@@ -13,6 +13,32 @@ class Api {
     }
   }
 
+  static Future<List<SourceModel>> getAllSources() async {
+    try {
+      final url = Uri.https(ApiRoutes.baseUrl, "v2/top-headlines/sources", {
+        "apiKey": ApiConstants.apiKey,
+      });
+
+      final res = await http.get(url);
+      final jsonData = await json.decode(res.body);
+
+      checkApiRateLimit(jsonData);
+
+      if (jsonData["sources"] != null && jsonData["sources"] is List) {
+        final List<SourceModel> sources = (jsonData["sources"] as List)
+            .map((source) => SourceModel.fromJson(source))
+            .toList();
+
+        return sources;
+      } else {
+        throw Exception("Invalid data format received from API");
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
   static Future<List<SourceModel>> getCategorySources(String category) async {
     try {
       final url = Uri.https(ApiRoutes.baseUrl, "v2/top-headlines/sources", {
@@ -27,7 +53,7 @@ class Api {
 
       if (jsonData["sources"] != null && jsonData["sources"] is List) {
         final List<SourceModel> sources = (jsonData["sources"] as List)
-            .map((article) => SourceModel.fromJson(article))
+            .map((source) => SourceModel.fromJson(source))
             .toList();
 
         return sources;
@@ -40,13 +66,10 @@ class Api {
     }
   }
 
-  static Future<List<ArticleModel>> getArticles(
-    String sourceId,
-    String category,
-  ) async {
+  static Future<List<ArticleModel>> getArticles(String sourceId) async {
     try {
       final url = Uri.parse(
-        "https://${ApiRoutes.baseUrl}/v2/top-headlines?sources=$sourceId?category=$category&apiKey=${ApiConstants.apiKey}",
+        "https://${ApiRoutes.baseUrl}/v2/top-headlines?sources=$sourceId&apiKey=${ApiConstants.apiKey}",
       );
 
       final res = await http.get(url);
